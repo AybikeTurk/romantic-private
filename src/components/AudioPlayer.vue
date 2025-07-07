@@ -53,11 +53,11 @@ import { ref, onMounted } from 'vue';
 
 // Şarkı Listesi
 const playlist = [
-    { title: "İntizar", artist: "Elmira Rehimova", src: "/songs/intizar.mp3" },
-    { title: "Bana Sen Lazımsın", artist: "Rafet El Roman", src: "/songs/BanaSenLazimsin.mp3" },
-    { title: "Geceyi Sana Yazdım", artist: "Onur Akın", src: "/songs/GeceyiSanaYazdim.mp3" },
-
+    { title: "İntizar", artist: "Elmira Rehimova", src: `${import.meta.env.BASE_URL}songs/intizar.mp3` },
+    { title: "Bana Sen Lazımsın", artist: "Rafet El Roman", src: `${import.meta.env.BASE_URL}songs/BanaSenLazimsin.mp3` },
+    { title: "Geceyi Sana Yazdım", artist: "Onur Akın", src: `${import.meta.env.BASE_URL}songs/GeceyiSanaYazdim.mp3` },
 ];
+
 
 // Player State
 const audio = ref(null);
@@ -112,6 +112,8 @@ const seek = (e) => {
 // AudioPlayer.vue (script setup)
 const playAudio = () => {
     if (audio.value && !isPlaying.value) {
+        audio.value.src = currentSong.value.src; // 🔧 ekle
+        audio.value.load();                      // 🔧 ekle
         audio.value.play()
             .then(() => {
                 isPlaying.value = true;
